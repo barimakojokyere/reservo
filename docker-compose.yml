@@ -15,7 +15,16 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
-  appui:
+  rsvobackend:
+    container_name: rsvobackend
+    image: rsvobackend
+    restart: always
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+
+  rsvogui:
     container_name: rsvogui
     image: rsvogui
     restart: always
