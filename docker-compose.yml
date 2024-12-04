@@ -1,0 +1,43 @@
+services:
+  rsvodb:
+    container_name: rsvodb
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    volumes:
+      - ./rsvodb-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  rsvobackend:
+    container_name: rsvobackend
+    image: rsvobackend
+    restart: always
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+
+  rsvogui:
+    container_name: rsvogui
+    image: rsvogui
+    restart: always
+    networks:
+      - frontend
+    ports:
+      - 3000:3000
+
+networks:
+  frontend:
+    name: frontend
+    driver: bridge
+
+  backend:
+    name: backend
+    driver: bridge
